@@ -117,7 +117,7 @@ export const portfolio = {
         initials: "MD",
         title: "Network Infrastructure & Field Engineer",
         company: "MDS Global IT",
-        period: "2022 – 2025",
+        period: "2022 – Jun 2024",
         location: "Boston, MA & Philadelphia, PA",
         type: "Full-time",
         achievements: [
