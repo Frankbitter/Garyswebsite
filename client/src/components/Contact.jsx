@@ -52,6 +52,14 @@ export default function Contact() {
               <p className="font-medium text-gray-200">Location</p>
               <p className="text-gray-400">{meta.location}</p>
             </div>
+            {meta.website && (
+              <div>
+                <p className="font-medium text-gray-200">Website</p>
+                <a href={meta.website} className="text-accent-light hover:underline" target="_blank" rel="noreferrer">
+                  garysandhu.life
+                </a>
+              </div>
+            )}
             {meta.linkedin && meta.linkedin !== '#' && (
               <div>
                 <p className="font-medium text-gray-200">LinkedIn</p>

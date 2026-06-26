@@ -10,6 +10,7 @@ export const portfolio = {
     location: "Plano, TX 75082",
     github: "#",
     linkedin: "https://www.linkedin.com/in/gagandeep-sandhu-0329072b4/",
+    website: "https://garysandhu.life",
   },
 
   nav: [
