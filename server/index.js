@@ -1,8 +1,10 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
+import { sendContactEmail } from '../lib/sendContactEmail.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -22,14 +24,23 @@ app.get('/api/hello', (_req, res) => {
   res.json({ message: "Welcome to Gary's Website" });
 });
 
-app.post('/api/contact', (req, res) => {
+app.post('/api/contact', async (req, res) => {
   const { name, email, subject, message } = req.body ?? {};
 
   if (!name || !email || !subject || !message) {
     return res.status(400).json({ error: 'All fields are required.' });
   }
 
-  console.log('Contact form submission:', { name, email, subject, message });
+  const result = await sendContactEmail({ name, email, subject, message });
+
+  if (!result.ok) {
+    if (result.reason === 'not_configured') {
+      console.log('Contact form submission (email not configured):', { name, email, subject, message });
+      return res.json({ success: true, message: 'Thanks for reaching out!' });
+    }
+    return res.status(500).json({ error: 'Failed to send message. Please try again later.' });
+  }
+
   res.json({ success: true, message: 'Thanks for reaching out!' });
 });
 

@@ -11,6 +11,7 @@ export default function Contact() {
     event.preventDefault();
     const form = new FormData(event.target);
     const payload = Object.fromEntries(form.entries());
+    setStatus('');
 
     try {
       const res = await fetch('/api/contact', {
@@ -18,11 +19,12 @@ export default function Contact() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
-      if (!res.ok) throw new Error('Failed');
-      setStatus('Message sent! (Logged on server for now.)');
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Failed');
+      setStatus('Message sent! I\'ll get back to you soon.');
       event.target.reset();
-    } catch {
-      setStatus('Could not send message. Check the server is running.');
+    } catch (error) {
+      setStatus(error.message || 'Could not send message. Please try again.');
     }
   }
 
